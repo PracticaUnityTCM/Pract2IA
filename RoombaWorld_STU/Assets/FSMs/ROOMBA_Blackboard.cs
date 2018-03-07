@@ -24,8 +24,7 @@ public class ROOMBA_Blackboard : MonoBehaviour {
     
     public List<GameObject> memory; // list of detected dust units not picked due to presence of poo
 
-	
-	void Start () {
+    void Start () {
         memory = new List<GameObject>();
         energyLine = GameObject.Find("EnergyLine").GetComponent<TextMesh>();
 	}
@@ -43,7 +42,7 @@ public class ROOMBA_Blackboard : MonoBehaviour {
     }
 
     // invoked by Update to subtract energy. 
-    private void Discharge (float deltaTime)
+    public void Discharge (float deltaTime)
     {
         currentCharge = currentCharge - deltaTime * energyConsumptionPerSecond;
         if (currentCharge < 0) currentCharge = 0;

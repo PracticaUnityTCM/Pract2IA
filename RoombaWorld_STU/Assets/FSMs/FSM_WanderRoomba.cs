@@ -21,6 +21,18 @@ public class FSM_WanderRoomba : FiniteStateMachine
         RouterExecutor.enabled = false;
         GOTarjet = new GameObject("TargetRoomba");
     }
+    public override void Exit()
+    {
+        RouterExecutor.target = null;
+        RouterExecutor.enabled = false;
+        base.Exit();
+    }
+
+    public override void ReEnter()
+    {
+        base.ReEnter();
+        currentState = States.INITIAL;
+    }
     // Update is called once per frame
     void Update()
     {
