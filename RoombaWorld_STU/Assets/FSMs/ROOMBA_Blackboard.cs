@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class ROOMBA_Blackboard : MonoBehaviour {
 
-    public float closeDustDetectionRadius = 30;  // radius for dust detection   
-    public float farDustDetectionRadius = 100;   // radius for random dust detection
-    public float closePooDetectionRadius = 75;   // radius for poo detection    
-    public float farPooDetectionRadius = 150;    // radius for random poo detection
+    public float closeDustDetectionRadius = 100;  // radius for dust detection   
+    public float farDustDetectionRadius = 200;   // radius for random dust detection
+    public float closePooDetectionRadius = 125;   // radius for poo detection    
+    public float farPooDetectionRadius = 250;    // radius for random poo detection
 
     public float dustReachedRadius = 5; // reachability radius
     public float pooReachedRadius = 5;  // reachability radius

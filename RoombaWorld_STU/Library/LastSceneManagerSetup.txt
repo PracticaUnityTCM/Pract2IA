@@ -1,4 +1,4 @@
 sceneSetups:
-- path: Assets/Scenes/RoombaWorld.unity
+- path: "C:/Users/emore/Desktop/INTEL\xB7LIGENCIA ARTIFICIAL/Pathfinding_STU/Assets/Scenes/03_start_path_zones.unity"
   isLoaded: 1
   isActive: 1
