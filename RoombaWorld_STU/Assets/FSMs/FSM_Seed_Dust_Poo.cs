@@ -9,7 +9,7 @@ namespace FSM
     [RequireComponent(typeof(FSM_WanderRoomba))]
     public class FSM_Seed_Dust_Poo : FiniteStateMachine
     {
-        public enum State { INITIAL, SEED_POO, SEED_DUST, SEED_DUST_IN_MEMORY };
+        public enum State { INITIAL, SEED_POO, SEED_DUST, SEED_DUST_IN_MEMORY, PIVOT_STATE };
 
         public State currentState = State.INITIAL;
 
@@ -54,7 +54,7 @@ namespace FSM
             switch (currentState)
             {
                 case State.INITIAL:
-                    ChangeState(State.SEED_DUST);
+                    ChangeState(State.PIVOT_STATE);
                     break;
 
                 case State.SEED_POO:
@@ -84,22 +84,32 @@ namespace FSM
                     if (targetedPoo != null && DistanceFromMe(targetedPoo) < myBlackBoard.pooReachedRadius)
                     {
                         CleanUp(targetedPoo);
-                        if (CheckIfPooInCloseRange() || CheckIfPooInLargeRange())
-                        {
-                            ChangeState(State.SEED_POO);
-                            break;
-                        }
-                        else if (myBlackBoard.memory.Count > 0)
-                        {
-                            ChangeState(State.SEED_DUST_IN_MEMORY);
-                            break;
-                        }
-                        else
-                        {
-                            ChangeState(State.SEED_DUST);
-                            break;
-                        }
+                        ChangeState(State.PIVOT_STATE);
+                        break;
                     }
+                    break;
+
+                case State.PIVOT_STATE:
+                    if (CheckIfPooInCloseRange() || CheckIfPooInLargeRange())
+                    {
+                        ChangeState(State.SEED_POO);
+                        break;
+                    }
+                    else if (myBlackBoard.memory.Count > 0)
+                    {
+                        ChangeState(State.SEED_DUST_IN_MEMORY);
+                        break;
+                    }
+                    else if (CheckIfDustInCloseRange() || CheckIfDustInLargeRange())
+                    {
+                        ChangeState(State.SEED_DUST);
+                        break;
+                    }
+                    else
+                    {
+
+                    }
+
                     break;
 
                 case State.SEED_DUST:
@@ -120,7 +130,7 @@ namespace FSM
                     if (targetedDust != null && DistanceFromMe(targetedDust) < myBlackBoard.dustReachedRadius)
                     {
                         CleanUp(targetedDust);
-                        ChangeState(State.SEED_DUST);
+                        ChangeState(State.PIVOT_STATE);
                         break;
                     }
 
@@ -154,21 +164,37 @@ namespace FSM
                 case State.SEED_POO:
                     targetedDust = null;
                     targetedPoo = null;
+                    fsm_RouteExec.target = null;
                     fsm_RouteExec.Exit();
                     fsm_RouteExec.enabled = false;
                     break;
 
                 case State.SEED_DUST:
                     targetedDust = null;
+                    fsm_RouteExec.target = null;
                     fsm_RouteExec.Exit();
                     fsm_RouteExec.enabled = false;
                     break;
 
                 case State.SEED_DUST_IN_MEMORY:
                     nearestDust = null;
-
+                    fsm_RouteExec.target = null;
                     fsm_RouteExec.Exit();
                     fsm_RouteExec.enabled = false;
+
+                    if (myBlackBoard.memory.Count > 0)
+                    {
+                        ChangeState(State.SEED_DUST_IN_MEMORY);
+                        break;
+                    }
+                    else
+                    {
+                        ChangeState(State.PIVOT_STATE);
+                        break;
+                    }
+
+
+                case State.PIVOT_STATE:
                     break;
             }
 
@@ -176,62 +202,29 @@ namespace FSM
             switch (newState)
             {
                 case State.SEED_POO:
-                    if (CheckIfPooInCloseRange())
-                    {
-                        fsm_RouteExec.ReEnter();
-                        fsm_RouteExec.target = targetedPoo;
-                        fsm_RouteExec.enabled = true;
-                        break;
-                    }
-                    else if (CheckIfPooInLargeRange())
-                    {
-                        fsm_RouteExec.ReEnter();
-                        fsm_RouteExec.target = targetedPoo;
-                        fsm_RouteExec.enabled = true;
-                        break;
-                    }
-                    else
-                    {
-                        ChangeState(State.SEED_DUST);
-                    }
-
+                    fsm_RouteExec.ReEnter();
+                    fsm_RouteExec.target = targetedPoo;
+                    fsm_RouteExec.enabled = true;
+                    
                     break;
 
                 case State.SEED_DUST:
-                    if (CheckIfDustInCloseRange())
-                    {
-                        fsm_RouteExec.ReEnter();
-                        fsm_RouteExec.target = targetedDust;
-                        fsm_RouteExec.enabled = true;
-                        break;
-                    }
-                    else if (CheckIfDustInLargeRange())
-                    {
-                        fsm_RouteExec.ReEnter();
-                        fsm_RouteExec.target = targetedDust;
-                        fsm_RouteExec.enabled = true;
-                        break;
-                    }
-                    else
-                    {
-                        ChangeState(State.SEED_POO);
-                    }
+                    fsm_RouteExec.ReEnter();
+                    fsm_RouteExec.target = targetedDust;
+                    fsm_RouteExec.enabled = true;
+                    
                     break;
 
                 case State.SEED_DUST_IN_MEMORY:
-                    if (myBlackBoard.memory.Count > 0)
-                    {
-                        FindNearestDustInMemory();
-                        fsm_RouteExec.ReEnter();
-                        fsm_RouteExec.target = nearestDust;
-                        fsm_RouteExec.enabled = true;
-                    }
-                    else
-                    {
-                        ChangeState(State.SEED_DUST);
-                        break;
-                    }
+                    FindNearestDustInMemory();
+                    fsm_RouteExec.ReEnter();
+                    fsm_RouteExec.target = nearestDust;
+                    fsm_RouteExec.enabled = true;
                     
+                    
+                    break;
+
+                case State.PIVOT_STATE:
                     break;
             }
             currentState = newState;
