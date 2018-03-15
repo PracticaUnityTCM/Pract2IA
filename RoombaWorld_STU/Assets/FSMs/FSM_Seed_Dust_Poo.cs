@@ -7,8 +7,10 @@ namespace FSM
 {
     [RequireComponent(typeof(FSM_RouteExecutor))]
     [RequireComponent(typeof(FSM_WanderRoomba))]
+    [RequireComponent(typeof(ROOMBA_Blackboard))]
     public class FSM_Seed_Dust_Poo : FiniteStateMachine
     {
+
         public enum State { INITIAL, SEED_POO, SEED_DUST, SEED_DUST_IN_MEMORY, PIVOT_STATE };
 
         public State currentState = State.INITIAL;
@@ -16,6 +18,7 @@ namespace FSM
         private ROOMBA_Blackboard myBlackBoard;
 
         private FSM_RouteExecutor fsm_RouteExec;
+        private FSM_WanderRoomba FSM_WanderRoomba;
         
         [SerializeField]
         private GameObject targetedDust;
@@ -24,11 +27,13 @@ namespace FSM
         [SerializeField]
         private GameObject nearestDust;
 
+        private int dustToRemoveIndex;
+
         void Start()
         {
             myBlackBoard = GetComponent<ROOMBA_Blackboard>();
             fsm_RouteExec = GetComponent<FSM_RouteExecutor>();
-
+            FSM_WanderRoomba = GetComponent<FSM_WanderRoomba>();
             fsm_RouteExec.enabled = false;
             nearestDust = null;
         }
@@ -69,9 +74,9 @@ namespace FSM
                             fsm_RouteExec.target = otherPoo;
                         }
                     }
-                    if (targetedPoo != null && CheckIfDustInCloseRange())
+                    if (targetedPoo != null && CheckIfDustInCloseRange() || CheckIfDustInLargeRange())
                     {
-                        GameObject dustOnTheWay;
+                        /*GameObject dustOnTheWay;
                         dustOnTheWay = SensingUtils.FindInstanceWithinRadius(gameObject, "DUST", myBlackBoard.closeDustDetectionRadius);
                         if (dustOnTheWay != null)
                         {
@@ -79,7 +84,19 @@ namespace FSM
                             {
                                 myBlackBoard.AddToMemory(dustOnTheWay);
                             }
+                        }*/
+
+                        if (CheckIfDustInCloseRange())
+                        {
+                            myBlackBoard.AddToMemory(targetedDust);
+                            targetedDust = null;
                         }
+                        if (CheckIfDustInLargeRange())
+                        {
+                            myBlackBoard.AddToMemory(targetedDust);
+                            targetedDust = null;
+                        }
+
                     }
                     if (targetedPoo != null && DistanceFromMe(targetedPoo) < myBlackBoard.pooReachedRadius)
                     {
@@ -100,7 +117,12 @@ namespace FSM
                         ChangeState(State.SEED_DUST_IN_MEMORY);
                         break;
                     }
-                    else if (CheckIfDustInCloseRange() || CheckIfDustInLargeRange())
+                    else if (CheckIfDustInCloseRange())
+                    {
+                        ChangeState(State.SEED_DUST);
+                        break;
+                    }
+                    else if (CheckIfDustInLargeRange())
                     {
                         ChangeState(State.SEED_DUST);
                         break;
@@ -109,7 +131,6 @@ namespace FSM
                     {
 
                     }
-
                     break;
 
                 case State.SEED_DUST:
@@ -120,20 +141,12 @@ namespace FSM
                         break;
                     }
 
-                    /*if (CheckIfDustInCloseRange())
-                    {
-                        fsm_RouteExec.Exit();
-                        fsm_RouteExec.ReEnter();
-                        fsm_RouteExec.target = targetedDust;
-                    }*/
-
                     if (targetedDust != null && DistanceFromMe(targetedDust) < myBlackBoard.dustReachedRadius)
                     {
                         CleanUp(targetedDust);
                         ChangeState(State.PIVOT_STATE);
                         break;
                     }
-
                     break;
 
                 case State.SEED_DUST_IN_MEMORY:
@@ -141,17 +154,17 @@ namespace FSM
                     {
                         RemoveDustFromMemory(nearestDust);
                         CleanUp(nearestDust);
-                        ChangeState(State.SEED_DUST_IN_MEMORY);
-                        break;
+                        if (myBlackBoard.memory.Count > 0)
+                        {
+                            ChangeState(State.SEED_DUST_IN_MEMORY);
+                            break;
+                        }
+                        else
+                        {
+                            ChangeState(State.PIVOT_STATE);
+                            break;
+                        }
                     }
-
-                    //UNCOMMENT FOR DIFERENT CLEANUP ENDING BEHAVIOR (and remove previous changeState() call)
-                    /*if (fsm_RouteExec.currentState == FSM_RouteExecutor.State.TERMINATED)  
-                    {
-                        ChangeState(State.SEED_DUST_IN_MEMORY);
-                        break;
-                    }*/
-
                     break;
             }
         }
@@ -181,17 +194,7 @@ namespace FSM
                     fsm_RouteExec.target = null;
                     fsm_RouteExec.Exit();
                     fsm_RouteExec.enabled = false;
-
-                    if (myBlackBoard.memory.Count > 0)
-                    {
-                        ChangeState(State.SEED_DUST_IN_MEMORY);
-                        break;
-                    }
-                    else
-                    {
-                        ChangeState(State.PIVOT_STATE);
-                        break;
-                    }
+                    break;
 
 
                 case State.PIVOT_STATE:
@@ -205,14 +208,12 @@ namespace FSM
                     fsm_RouteExec.ReEnter();
                     fsm_RouteExec.target = targetedPoo;
                     fsm_RouteExec.enabled = true;
-                    
                     break;
 
                 case State.SEED_DUST:
                     fsm_RouteExec.ReEnter();
                     fsm_RouteExec.target = targetedDust;
                     fsm_RouteExec.enabled = true;
-                    
                     break;
 
                 case State.SEED_DUST_IN_MEMORY:
@@ -220,8 +221,6 @@ namespace FSM
                     fsm_RouteExec.ReEnter();
                     fsm_RouteExec.target = nearestDust;
                     fsm_RouteExec.enabled = true;
-                    
-                    
                     break;
 
                 case State.PIVOT_STATE:
@@ -258,21 +257,15 @@ namespace FSM
             {
                 if (dust.Equals(dustToRemove))
                 {
-                    //myBlackBoard.memory.Remove(dust);
-                    if (myBlackBoard.memory.Remove(dust))
-                    {
-                        Debug.Log("//Item succesfully removed from memory//");
-                    }
-                    else
-                    {
-                        Debug.Log("//Can't find or remove item from memory//");
-                    }
+                    dustToRemoveIndex = myBlackBoard.memory.IndexOf(dust);
                 }
             }
+            myBlackBoard.memory.RemoveAt(dustToRemoveIndex);
         }
 
         private void CleanUp(GameObject objToClean)
         {
+
             Destroy(objToClean);
         }
         
@@ -285,11 +278,11 @@ namespace FSM
                     return true;
                 }
             }
-            
             return false;
         }
 
         // ////SENSE EXTRA FUNCTIONS//// //
+        
         bool CheckIfDustInCloseRange ()
         {
             GameObject dust;
@@ -301,7 +294,7 @@ namespace FSM
             }
             return false;
         }
-
+        
         bool CheckIfPooInCloseRange()
         {
             GameObject poo;
@@ -313,7 +306,7 @@ namespace FSM
             }
             return false;
         }
-
+        
         bool CheckIfDustInLargeRange()
         {
             GameObject dust;
@@ -325,7 +318,7 @@ namespace FSM
             }
             return false;
         }
-
+        
         bool CheckIfPooInLargeRange()
         {
             GameObject poo;
