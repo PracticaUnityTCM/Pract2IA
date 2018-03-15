@@ -141,6 +141,7 @@ namespace FSM
                     break;
 
                 case State.GO_TO_ENERGY_POINT:
+                    myBlackBoard.memory.Clear();
                     FindNearestRechargePoint(); //FIND THE NEAREST CHARGE POINT
                     fsm_RouteExec.ReEnter();
                     fsm_RouteExec.target = energyPoint;

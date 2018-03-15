@@ -6,7 +6,7 @@ namespace FSM
 {
     [RequireComponent(typeof(FSM_RouteExecutor))]
     [RequireComponent(typeof(MOUSE_Blackboard))]
-    public class FSM_Mouse : MonoBehaviour
+    public class FSM_Mouse : FiniteStateMachine
     {
 
         public enum State { INITIAL, ENTER, MAKE_POO, EXIT,DESTROY };
@@ -15,6 +15,18 @@ namespace FSM
         private MOUSE_Blackboard MouseBB;
         private GameObject GOTarjet;
         private Vector3 target;
+        public override void Exit()
+        {
+            RouterExecutor.target = null;
+            RouterExecutor.enabled = false;
+            base.Exit();
+        }
+
+        public override void ReEnter()
+        {
+            base.ReEnter();
+            currentState = State.INITIAL;
+        }
         // Use this for initialization
         void Start()
         {
