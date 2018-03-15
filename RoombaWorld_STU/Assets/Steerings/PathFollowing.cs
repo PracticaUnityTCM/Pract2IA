@@ -32,7 +32,7 @@ namespace Steerings
 				return NULL_STEERING;
 			}
 			if (path.error) {
-				Debug.LogError ("PathFollowing invoked with null path");
+ 
 				return NULL_STEERING;
 			}
 

@@ -7,6 +7,7 @@ public class MOUSE_Blackboard : MonoBehaviour
     private GameObject[] exitPoints;
     public GameObject pooPrefab;
     public float roombaDetectionRadius = 50;
+    public GameObject Roomba;
        
     void Awake()
     {
@@ -14,6 +15,7 @@ public class MOUSE_Blackboard : MonoBehaviour
         exitPoints = GameObject.FindGameObjectsWithTag("EXIT");
 
         pooPrefab = Resources.Load<GameObject>("POO");
+        Roomba = GameObject.FindGameObjectWithTag("ROOMBA");
     }
 
 

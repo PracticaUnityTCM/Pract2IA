@@ -7,15 +7,17 @@ namespace FSM
 {
     [RequireComponent(typeof(FSM_RouteExecutor))]
     [RequireComponent(typeof(FSM_WanderRoomba))]
+    [RequireComponent(typeof(ROOMBA_Blackboard))]
     public class FSM_Seed_Dust_Poo : FiniteStateMachine
     {
-        public enum State { INITIAL, SEED_POO, SEED_DUST, SEED_DUST_IN_MEMORY };
+        public enum State { INITIAL, SEED_POO, SEED_DUST, SEED_DUST_IN_MEMORY,WANDER };
 
         public State currentState = State.INITIAL;
 
         private ROOMBA_Blackboard myBlackBoard;
 
         private FSM_RouteExecutor fsm_RouteExec;
+        private FSM_WanderRoomba FSM_WanderRoomba;
         
         [SerializeField]
         private GameObject targetedDust;
@@ -28,7 +30,7 @@ namespace FSM
         {
             myBlackBoard = GetComponent<ROOMBA_Blackboard>();
             fsm_RouteExec = GetComponent<FSM_RouteExecutor>();
-
+            FSM_WanderRoomba = GetComponent<FSM_WanderRoomba>();
             fsm_RouteExec.enabled = false;
             nearestDust = null;
         }
@@ -280,6 +282,7 @@ namespace FSM
 
         private void CleanUp(GameObject objToClean)
         {
+
             Destroy(objToClean);
         }
         
