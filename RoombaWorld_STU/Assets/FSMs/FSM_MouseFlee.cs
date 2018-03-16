@@ -50,7 +50,6 @@ namespace FSM
                     ChangeState(State.NORAMAL);
                     break;
                 case State.NORAMAL:
-
                     float Distance = SensingUtils.DistanceToTarget(gameObject,MouseBB.Roomba);
                     if(Distance< MouseBB.roombaDetectionRadius)
                     {
@@ -59,7 +58,6 @@ namespace FSM
                         {
                             ChangeState(State.FLEE);
                         }
-                        
                     }
                     break;
                 case State.FLEE:
