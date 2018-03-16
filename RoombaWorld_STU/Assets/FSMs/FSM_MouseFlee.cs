@@ -15,6 +15,7 @@ namespace FSM
         public FSM_RouteExecutor RouterExecutor;
         private MOUSE_Blackboard MouseBB;
         private GameObject OBTarget;
+        private SpriteRenderer mySpriteRenderer;
       
         public override void Exit()
         {
@@ -32,6 +33,7 @@ namespace FSM
         // Use this for initialization
         void Start()
         {
+            mySpriteRenderer = GetComponent<SpriteRenderer>();
             FSMMOuse = GetComponent<FSM_Mouse>();
             RouterExecutor = GetComponent<FSM_RouteExecutor>();
             MouseBB = GetComponent<MOUSE_Blackboard>();
@@ -53,7 +55,11 @@ namespace FSM
                     if(Distance< MouseBB.roombaDetectionRadius)
                     {
                         OBTarget = MouseBB.NearestExitPoint();
-                        ChangeState(State.FLEE);
+                        if (AngleBetween(gameObject, MouseBB.Roomba, OBTarget) > 30)
+                        {
+                            ChangeState(State.FLEE);
+                        }
+                        
                     }
                     break;
                 case State.FLEE:
@@ -97,10 +103,20 @@ namespace FSM
                     RouterExecutor.ReEnter();
                     RouterExecutor.target = OBTarget;
                     RouterExecutor.enabled = true;
-                   
+                    mySpriteRenderer.color = Color.green;
                     break;
             }
             currentState = newState;
+        }
+
+        float AngleBetween(GameObject me, GameObject target, GameObject escapePoint)
+        {
+            float angle;
+            Vector2 meTarget = (target.transform.position - me.transform.position).normalized;
+            Vector2 meExitPoint = (escapePoint.transform.position - me.transform.position).normalized;
+
+            angle = Mathf.Abs(Vector2.Angle(meTarget, meExitPoint));
+            return angle;
         }
     }
 }
