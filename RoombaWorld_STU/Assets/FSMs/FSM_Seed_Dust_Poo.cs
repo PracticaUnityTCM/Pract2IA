@@ -18,7 +18,6 @@ namespace FSM
         private ROOMBA_Blackboard myBlackBoard;
 
         private FSM_RouteExecutor fsm_RouteExec;
-        private FSM_WanderRoomba FSM_WanderRoomba;
         
         [SerializeField]
         private GameObject targetedDust;
@@ -33,7 +32,6 @@ namespace FSM
         {
             myBlackBoard = GetComponent<ROOMBA_Blackboard>();
             fsm_RouteExec = GetComponent<FSM_RouteExecutor>();
-            FSM_WanderRoomba = GetComponent<FSM_WanderRoomba>();
             fsm_RouteExec.enabled = false;
             nearestDust = null;
         }
@@ -69,6 +67,7 @@ namespace FSM
                     {
                         if (DistanceFromMe(otherPoo) < DistanceFromMe(targetedPoo))
                         {
+                            targetedPoo = otherPoo;
                             fsm_RouteExec.Exit();
                             fsm_RouteExec.ReEnter();
                             fsm_RouteExec.target = otherPoo;
@@ -140,7 +139,18 @@ namespace FSM
                         ChangeState(State.SEED_POO);
                         break;
                     }
-
+                    GameObject otherDust;
+                    otherDust = SensingUtils.FindInstanceWithinRadius(gameObject, "DUST", myBlackBoard.closeDustDetectionRadius);
+                    if (otherDust != null && !otherDust.Equals(targetedDust))
+                    {
+                        if (DistanceFromMe(otherDust) < DistanceFromMe(targetedDust))
+                        {
+                            targetedDust = otherDust;
+                            fsm_RouteExec.Exit();
+                            fsm_RouteExec.ReEnter();
+                            fsm_RouteExec.target = otherDust;
+                        }
+                    }
                     if (targetedDust != null && DistanceFromMe(targetedDust) < myBlackBoard.dustReachedRadius)
                     {
                         CleanUp(targetedDust);
