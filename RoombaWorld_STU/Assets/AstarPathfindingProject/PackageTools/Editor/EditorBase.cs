@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 
 namespace Pathfinding {
-	/** Helper for creating editors */
+	/// <summary>Helper for creating editors</summary>
 	[CustomEditor(typeof(VersionedMonoBehaviour), true)]
 	[CanEditMultipleObjects]
 	public class EditorBase : Editor {
@@ -16,6 +16,7 @@ namespace Pathfinding {
 		static GUIContent content = new GUIContent();
 		static GUIContent showInDocContent = new GUIContent("Show in online documentation", "");
 		static GUILayoutOption[] noOptions = new GUILayoutOption[0];
+		public static System.Func<string> getDocumentationURL;
 
 		static void LoadMeta () {
 			if (cachedTooltips == null) {
@@ -83,13 +84,17 @@ namespace Pathfinding {
 		}
 
 		protected virtual void OnEnable () {
-			foreach (var target in targets) if (target != null) (target as IVersionedMonoBehaviourInternal).OnUpgradeSerializedData(int.MaxValue, true);
+			foreach (var target in targets) if (target != null) (target as IVersionedMonoBehaviourInternal).UpgradeFromUnityThread();
 		}
 
 		public sealed override void OnInspectorGUI () {
 			EditorGUI.indentLevel = 0;
 			serializedObject.Update();
-			Inspector();
+			try {
+				Inspector();
+			} catch (System.Exception e) {
+				Debug.LogException(e, target);
+			}
 			serializedObject.ApplyModifiedProperties();
 			if (targets.Length == 1 && (target as MonoBehaviour).enabled) {
 				var attr = target.GetType().GetCustomAttributes(typeof(UniqueComponentAttribute), true);
@@ -122,6 +127,16 @@ namespace Pathfinding {
 			return res;
 		}
 
+		protected void Section (string label) {
+			EditorGUILayout.Separator();
+			EditorGUILayout.LabelField(label, EditorStyles.boldLabel);
+		}
+
+		protected void FloatField (string propertyPath, string label = null, string tooltip = null, float min = float.NegativeInfinity, float max = float.PositiveInfinity) {
+			PropertyField(propertyPath, label, tooltip);
+			Clamp(propertyPath, min, max);
+		}
+
 		protected bool PropertyField (string propertyPath, string label = null, string tooltip = null) {
 			return PropertyField(FindProperty(propertyPath), label, tooltip, propertyPath);
 		}
@@ -135,7 +150,8 @@ namespace Pathfinding {
 			content.tooltip = tooltip ?? FindTooltip(propertyPath);
 			var contextClick = IsContextClick();
 			EditorGUILayout.PropertyField(prop, content, true, noOptions);
-			if (contextClick && Event.current.type == EventType.Used) CaptureContextClick(propertyPath);
+			// Disable context clicking on arrays (as Unity has its own very useful context menu for the array elements)
+			if (contextClick && !prop.isArray && Event.current.type == EventType.Used) CaptureContextClick(propertyPath);
 			return prop.propertyType == SerializedPropertyType.Boolean ? !prop.hasMultipleDifferentValues && prop.boolValue : true;
 		}
 
@@ -146,10 +162,10 @@ namespace Pathfinding {
 		void CaptureContextClick (string propertyPath) {
 			var url = FindURL(target.GetType(), propertyPath);
 
-			if (url != null) {
+			if (url != null && getDocumentationURL != null) {
 				Event.current.Use();
 				var menu = new GenericMenu();
-				menu.AddItem(showInDocContent, false, () => Application.OpenURL(AstarUpdateChecker.GetURL("documentation") + url));
+				menu.AddItem(showInDocContent, false, () => Application.OpenURL(getDocumentationURL() + url));
 				menu.ShowAsContext();
 			}
 		}
@@ -166,6 +182,22 @@ namespace Pathfinding {
 			if (EditorGUI.EndChangeCheck()) {
 				if (prop.propertyType == SerializedPropertyType.Enum) prop.enumValueIndex = newVal;
 				else prop.intValue = newVal;
+			}
+			EditorGUI.showMixedValue = false;
+			if (contextClick && GUILayoutUtility.GetLastRect().Contains(Event.current.mousePosition)) CaptureContextClick(propertyPath);
+		}
+
+		protected void Mask (string propertyPath, string[] options, string label = null) {
+			var prop = FindProperty(propertyPath);
+
+			content.text = label ?? prop.displayName;
+			content.tooltip = FindTooltip(propertyPath);
+			var contextClick = IsContextClick();
+			EditorGUI.BeginChangeCheck();
+			EditorGUI.showMixedValue = prop.hasMultipleDifferentValues;
+			int newVal = EditorGUILayout.MaskField(content, prop.intValue, options);
+			if (EditorGUI.EndChangeCheck()) {
+				prop.intValue = newVal;
 			}
 			EditorGUI.showMixedValue = false;
 			if (contextClick && GUILayoutUtility.GetLastRect().Contains(Event.current.mousePosition)) CaptureContextClick(propertyPath);

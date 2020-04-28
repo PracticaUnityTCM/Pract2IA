@@ -17,8 +17,9 @@ public class RandomLocationGenerator  {
 
         // get all the patrol points
         patrolPoints = new List<GameObject>(GameObject.FindGameObjectsWithTag("PATROLPOINT"));
+        
     } 
-
+    // QUI DONA 2 FUNCIONS X TRIAR ELS PUNTS D LA ROOMBA 
     public static Vector3 RandomWalkableLocation ()
     {
         GraphNode node = allNodes[Random.Range(0, allNodes.Count)];
