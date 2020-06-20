@@ -1,10 +1,76 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="edec4661-22a6-4d7f-af88-1cad63b4abc9" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/Library/CurrentLayout.dwlt" beforeDir="false" afterPath="$PROJECT_DIR$/Library/CurrentLayout.dwlt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Library/ScriptAssemblies/Assembly-CSharp-Editor.dll.mdb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Library/assetDatabase3" beforeDir="false" afterPath="$PROJECT_DIR$/Library/assetDatabase3" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Library/metadata/00/0000000000000000c000000000000000" beforeDir="false" afterPath="$PROJECT_DIR$/Library/metadata/00/0000000000000000c000000000000000" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Library/metadata/0e/0efbe2d04dbb642a8833e41b8e8c7275" beforeDir="false" afterPath="$PROJECT_DIR$/Library/metadata/0e/0efbe2d04dbb642a8833e41b8e8c7275" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Library/metadata/19/19c43d572022a4278a4d426f536b5ee4" beforeDir="false" afterPath="$PROJECT_DIR$/Library/metadata/19/19c43d572022a4278a4d426f536b5ee4" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Library/metadata/20/20549335d45df4a329ece093b865221b" beforeDir="false" afterPath="$PROJECT_DIR$/Library/metadata/20/20549335d45df4a329ece093b865221b" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Library/metadata/37/37e2b7ba5db684426ab22f42ef266b76" beforeDir="false" afterPath="$PROJECT_DIR$/Library/metadata/37/37e2b7ba5db684426ab22f42ef266b76" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Library/metadata/49/4931e76e5e5784200a904f4b59596556" beforeDir="false" afterPath="$PROJECT_DIR$/Library/metadata/49/4931e76e5e5784200a904f4b59596556" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Library/metadata/4f/4fadcced8ad4d40d59f3eea45426359d" beforeDir="false" afterPath="$PROJECT_DIR$/Library/metadata/4f/4fadcced8ad4d40d59f3eea45426359d" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Library/metadata/5a/5a85e178962ba475ca424001ea4c13ca" beforeDir="false" afterPath="$PROJECT_DIR$/Library/metadata/5a/5a85e178962ba475ca424001ea4c13ca" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Library/metadata/63/6319be37e337542dbb990c039726bc8f" beforeDir="false" afterPath="$PROJECT_DIR$/Library/metadata/63/6319be37e337542dbb990c039726bc8f" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Library/metadata/69/692b218e1079f47ff880a11ef4c5a365" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Library/metadata/69/692b218e1079f47ff880a11ef4c5a365.info" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Library/metadata/6c/6c78a6dd468954643a87ebf0014bc305" beforeDir="false" afterPath="$PROJECT_DIR$/Library/metadata/6c/6c78a6dd468954643a87ebf0014bc305" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Library/metadata/6d/6dad35c0b62e44c26ab244ad80deee1a" beforeDir="false" afterPath="$PROJECT_DIR$/Library/metadata/6d/6dad35c0b62e44c26ab244ad80deee1a" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Library/metadata/75/75d35165209824745b157ebc17415bbf" beforeDir="false" afterPath="$PROJECT_DIR$/Library/metadata/75/75d35165209824745b157ebc17415bbf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Library/metadata/81/810a4e97f5ccb4b5184c4c3206492974" beforeDir="false" afterPath="$PROJECT_DIR$/Library/metadata/81/810a4e97f5ccb4b5184c4c3206492974" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Library/metadata/89/89228bd1d9a659c46979c542aac8d0d7" beforeDir="false" afterPath="$PROJECT_DIR$/Library/metadata/89/89228bd1d9a659c46979c542aac8d0d7" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Library/metadata/89/893b17192239c453594fc4d8e250d5e8" beforeDir="false" afterPath="$PROJECT_DIR$/Library/metadata/89/893b17192239c453594fc4d8e250d5e8" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Library/metadata/97/97d8d5fc46a644f22b0d66c6ee18e753" beforeDir="false" afterPath="$PROJECT_DIR$/Library/metadata/97/97d8d5fc46a644f22b0d66c6ee18e753" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Library/metadata/b0/b02eba22c48084de68f51d5c8295e58d" beforeDir="false" afterPath="$PROJECT_DIR$/Library/metadata/b0/b02eba22c48084de68f51d5c8295e58d" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Library/metadata/b5/b56789f958bf1496ba91f7e2b4147166" beforeDir="false" afterPath="$PROJECT_DIR$/Library/metadata/b5/b56789f958bf1496ba91f7e2b4147166" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Library/metadata/c1/c170b7d6020264e66945723bf2311333" beforeDir="false" afterPath="$PROJECT_DIR$/Library/metadata/c1/c170b7d6020264e66945723bf2311333" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Library/metadata/cf/cfd9baf6289e54259afb1420c5bee619" beforeDir="false" afterPath="$PROJECT_DIR$/Library/metadata/cf/cfd9baf6289e54259afb1420c5bee619" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Library/metadata/d7/d748c2525aabf674d9d0f349a584aab4" beforeDir="false" afterPath="$PROJECT_DIR$/Library/metadata/d7/d748c2525aabf674d9d0f349a584aab4" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Library/metadata/e2/e256d5533142c4434897b4da38791511" beforeDir="false" afterPath="$PROJECT_DIR$/Library/metadata/e2/e256d5533142c4434897b4da38791511" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Library/metadata/e4/e4ab3c0aea7564a9c9af3bf72ed95858" beforeDir="false" afterPath="$PROJECT_DIR$/Library/metadata/e4/e4ab3c0aea7564a9c9af3bf72ed95858" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Library/metadata/e7/e736879b230a341c59bfcaed0bec3ac3" beforeDir="false" afterPath="$PROJECT_DIR$/Library/metadata/e7/e736879b230a341c59bfcaed0bec3ac3" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Library/metadata/ec/ecf6dbd9eea3a1e4581ae4719712c576" beforeDir="false" afterPath="$PROJECT_DIR$/Library/metadata/ec/ecf6dbd9eea3a1e4581ae4719712c576" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Library/metadata/f3/f373cccc6991444b0b8b6e8c512842db" beforeDir="false" afterPath="$PROJECT_DIR$/Library/metadata/f3/f373cccc6991444b0b8b6e8c512842db" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Library/metadata/f6/f6973e76355ee420394e5f521d20e2cc" beforeDir="false" afterPath="$PROJECT_DIR$/Library/metadata/f6/f6973e76355ee420394e5f521d20e2cc" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/EditorSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/EditorSettings.asset" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/Assets/AstarPathfindingProject/changelog.cs" root0="FORCE_HIGHLIGHTING" />
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/Assets/AstarPathfindingProject/changelog.cs" />
+      </list>
+    </option>
+  </component>
+  <component name="IgnoredFileRootStore">
+    <option name="generatedRoots">
+      <set>
+        <option value="E:\Users\Sergi Regi\GoogleDriveTecnocampus\Grau Videojocs\Curs3\T2\Intel·ligencia Artificial\RoombaWorld_STU\RoombaWorld_STU\.idea\.idea.RoombaWorld_STU\.idea" />
+      </set>
+    </option>
+  </component>
   <component name="ProjectId" id="1bAE3jRcNEISXYEAMI6k9eMTNBk" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showExcludedFiles" value="true" />
+    <option name="showLibraryContents" value="true" />
+    <option name="showVisibilityIcons" value="true" />
+  </component>
   <component name="PropertiesComponent">
+    <property name="Discover.Launch.Via.Unity" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
   </component>
   <component name="RunManager" selected="Attach to Unity Editor.Attach to Unity Editor">
@@ -20,5 +86,29 @@
       <option name="pid" />
       <method v="2" />
     </configuration>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="edec4661-22a6-4d7f-af88-1cad63b4abc9" name="Default Changelist" comment="" />
+      <created>1588066301787</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1588066301787</updated>
+      <workItem from="1588066308365" duration="655000" />
+    </task>
+    <servers />
+  </component>
+  <component name="UnityProjectConfiguration" hasMinimizedUI="true" />
+  <component name="UnityUnitTestConfiguration" currentTestLauncher="EditMode" />
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
 </project>
